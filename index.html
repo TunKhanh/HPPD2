@@ -1,32 +1,157 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chúc mừng sinh nhật!</title>
-  <style>
-    body {
-      background: #ffe4e1;
-      color: #d6336c;
-      font-family: 'Comic Sans MS', cursive;
-      text-align: center;
-      padding-top: 100px;
-    }
-    h1 {
-      font-size: 50px;
-      animation: bounce 1s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Sinh Nhật</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        
+        body {
+            background-color: #fff5f7;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .birthday-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .birthday-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .birthday-title {
+            font-family: 'Dancing Script', cursive;
+            color: #ec4899;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            background-color: #f472b6;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f59e0b;
+            opacity: 0;
+            animation: confetti 3s ease-out infinite;
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+        }
+    </style>
 </head>
-<body>
-  <h1>🎂 Chúc mừng sinh nhật! 🎉</h1>
-  <p>Chúc bạn một ngày thật tuyệt vời, tràn đầy niềm vui và yêu thương!</p>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="relative w-full max-w-3xl">
+        <!-- Balloons decoration -->
+        <div id="balloons-container"></div>
+        
+        <!-- Confetti -->
+        <div id="confetti-container"></div>
+        
+        <!-- Main card -->
+        <div class="birthday-card">
+            <!-- Header image -->
+            <div class="w-full h-48 overflow-hidden">
+                <img src="" alt="Bữa tiệc sinh nhật với bánh kem nhiều tầng, nến sáng và bong bóng bay nhiều màu sắc" class="w-full h-full object-cover" />
+            </div>
+            
+            <!-- Content -->
+            <div class="p-6 text-center">
+                <h1 class="birthday-title text-4xl md:text-5xl mb-4">Chúc Mừng Sinh Nhật!</h1>
+                
+                <div class="mb-6">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/37bdc913-5438-4ffc-84eb-eb942df1b905.png" alt="Hộp quà sinh nhật với nơ màu hồng được đặt trên bàn" class="mx-auto rounded-lg shadow-md mb-4" />
+                </div>
+                
+                <div class="text-lg text-gray-700 mb-6">
+                    <p class="mb-4">🎉 Chúc bạn có một ngày sinh nhật thật tuyệt vời!</p>
+                    <p class="mb-4">💝 Mong rằng năm mới sẽ mang đến cho Nhi thật nhiều niềm vui, sức khỏe và thành công!</p>
+                    <p>✨ Hãy tận hưởng ngày đặc biệt này thật trọn vẹn bên gia đình và bạn bè nhé!</p>
+                </div>
+                
+                <button onclick="showCake()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                    Nhấn để thổi nến
+                </button>
+                
+                <div id="cake" class="hidden mt-6">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9fdab14b-ce31-4897-a7f8-b276d2cf4055.png" alt="Bánh sinh nhật với nến sáng được trang trí đẹp mắt" class="mx-auto rounded-lg shadow-md" />
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <script>
-    alert("🎉 Happy Birthday! Chúc bạn tuổi mới vui vẻ, thành công và hạnh phúc!");
-  </script>
+    <script>
+        // Create balloons
+        function createBalloons() {
+            const container = document.getElementById('balloons-container');
+            const colors = ['#f472b6', '#ec4899', '#db2777', '#be185d', '#831843'];
+            
+            for (let i = 0; i < 10; i++) {
+                const balloon = document.createElement('div');
+                balloon.classList.add('balloon');
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.left = Math.random() * 100 + '%';
+                balloon.style.top = Math.random() * 100 + '%';
+                balloon.style.width = (Math.random() * 20 + 30) + 'px';
+                balloon.style.height = (Math.random() * 20 + 40) + 'px';
+                balloon.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(balloon);
+            }
+        }
+        
+        // Create confetti
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#f59e0b', '#f97316', '#ef4444', '#10b981', '#3b82f6'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = -10 + 'px';
+                confetti.style.width = (Math.random() * 5 + 5) + 'px';
+                confetti.style.height = (Math.random() * 5 + 5) + 'px';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(confetti);
+            }
+        }
+        
+        // Show birthday cake
+        function showCake() {
+            document.getElementById('cake').classList.remove('hidden');
+            createConfetti();
+            
+            // Play birthday song
+            const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+            audio.play().catch(e => console.log('Auto-play prevented:', e));
+        }
+        
+        // Initialize page
+        window.onload = function() {
+            createBalloons();
+        };
+    </script>
 </body>
 </html>
+
